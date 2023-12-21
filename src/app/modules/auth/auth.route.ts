@@ -7,7 +7,7 @@ import { AuthValidation } from "./auth.validation";
 const router = Router();
 
 router.post('/signup',
-// validateRequest(AuthValidation.createUserZodSchema),
+validateRequest(AuthValidation.createUserZodSchema),
 authController.createUser);
 
 router.post('/login',
