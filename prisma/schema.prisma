@@ -13,10 +13,10 @@ datasource db {
 
 model User {
   id               String            @id @default(uuid())
-  name             String
+  fullName         String          @default("full_name")
   email            String
   password         String
-  role             UserRole
+  role             UserRole  @default(perfomer)
 
   @@map("users")
 }

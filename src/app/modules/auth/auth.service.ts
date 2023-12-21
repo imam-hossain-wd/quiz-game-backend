@@ -8,6 +8,16 @@ import { Secret } from 'jsonwebtoken';
 import { ILoginUser, ILoginUserResponse, IRefreshTokenResponse } from './auth.interface';
 
 const createUser = async (data: User): Promise<User> => {
+
+  const isUserExist = await prisma.user.findFirst({
+    where: {
+      email:data.email,
+    },
+  });
+
+  if (isUserExist) {
+    throw new ApiError(httpStatus.FOUND, 'User is already exist');
+  }
   const result = await prisma.user.create({
     data,
   });
