@@ -33,6 +33,11 @@ const loginUser = async (data: ILoginUser): Promise<ILoginUserResponse>=> {
     },
   });
 
+;
+  if(!isUserExist){
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
   if (isUserExist && isUserExist?.password !== password) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Password is incorrect');
   }

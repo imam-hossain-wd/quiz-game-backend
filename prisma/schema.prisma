@@ -10,18 +10,46 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id               String            @id @default(uuid())
-  fullName         String          @default("full_name")
+  fullName         String            @default("full_name")
   email            String
   password         String
-  role             UserRole  @default(perfomer)
-
-  @@map("users")
+  role             UserRole          @default(performer)
+  quizzes          Quiz[]
 }
+
+model Quiz {
+  id       String    @id @default(uuid())
+  name     String
+  category String
+  mark     Int
+  image    String
+  questions Question[]
+  userId   String
+  user     User      @relation(fields: [userId], references: [id])
+}
+
+model Question {
+  id        String    @id @default(uuid())
+  question  String
+  answer    String
+  options   Option[]
+  quizId    String
+  quiz      Quiz      @relation(fields: [quizId], references: [id])
+}
+
+model Option {
+  id        String    @id @default(uuid())
+  option    String
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+
+
 
 enum UserRole {
   admin
-  perfomer
+  performer
 }
