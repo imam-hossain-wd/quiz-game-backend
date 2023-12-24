@@ -25,19 +25,22 @@ model Quiz {
   category String
   mark     Int
   image    String
-  questions Question[]
-  userId   String
-  user     User      @relation(fields: [userId], references: [id])
-}
-
-model Question {
-  id        String    @id @default(uuid())
   question  String
   answer    String
   options   Option[]
   quizId    String
-  quiz      Quiz      @relation(fields: [quizId], references: [id])
+  userId   String
+  user     User      @relation(fields: [userId], references: [id])
 }
+
+// model Question {
+//   id        String    @id @default(uuid())
+//   question  String
+//   answer    String
+//   options   Option[]
+//   quizId    String
+//   quiz      Quiz      @relation(fields: [quizId], references: [id])
+// }
 
 model Option {
   id        String    @id @default(uuid())
@@ -45,8 +48,6 @@ model Option {
   questionId String
   question   Question @relation(fields: [questionId], references: [id])
 }
-
-
 
 
 enum UserRole {
