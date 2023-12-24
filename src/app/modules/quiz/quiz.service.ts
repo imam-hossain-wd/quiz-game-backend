@@ -1,15 +1,42 @@
-import { Quiz } from "@prisma/client";
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Prisma, Quiz } from "@prisma/client";
 import prisma from "../../../shared/prisma";
 
+type IFiltering = {
+  category?: string,
+  limit?:string
+}
 const createQuiz = async (data: Quiz): Promise<Quiz> => {
     const result = await prisma.quiz.create({
-      data,
+      data
     });
     return result;
 };
-const getQuiz = async (): Promise<Quiz[] | null> => {
-    const result = await prisma.quiz.findMany();
-    return result;
+
+const getQuiz = async (query: IFiltering): Promise<Quiz[] | null> => {
+  const { category, limit } = query;
+
+  const quizLimit = limit ? parseInt(limit) : undefined;
+
+  const filterOptions: Prisma.QuizWhereInput = {};
+
+  if (category) {
+    filterOptions.category = category;
+  }
+
+  const result = await prisma.quiz.findMany({
+    where: filterOptions,
+    take: quizLimit,
+    include: {
+      questions: {
+        include: {
+          options: true,
+        },
+      },
+    },
+  });
+
+  return result;
 };
 
   export const quizService = {

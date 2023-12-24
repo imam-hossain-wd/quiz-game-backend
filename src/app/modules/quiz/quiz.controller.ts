@@ -17,7 +17,11 @@ const createQuiz: RequestHandler = catchAsync(async (req, res) => {
     });
   });
 const getQuiz: RequestHandler = catchAsync(async (req, res) => {
-    const result = await quizService.getQuiz();
+
+  const query = req.query;
+  // console.log(query);
+
+    const result = await quizService.getQuiz(query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
