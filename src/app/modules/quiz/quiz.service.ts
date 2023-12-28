@@ -6,11 +6,11 @@ type IFiltering = {
   category?: string,
   limit?:string
 }
+
 const createQuiz = async (data: Quiz): Promise<Quiz> => {
     const result = await prisma.quiz.create({
       data
     });
-    console.log(result, 'result..');
     return result;
 };
 
@@ -35,8 +35,19 @@ const getQuiz = async (query: IFiltering): Promise<Quiz[] | null> => {
   return result;
 };
 
+const deleteQuiz = async (id:string) => {
+  const result = await prisma.quiz.delete({
+    where:{
+      id
+    }
+  })
+
+  return result;
+}
+
   export const quizService = {
     createQuiz,
-    getQuiz
+    getQuiz,
+    deleteQuiz
   }
   

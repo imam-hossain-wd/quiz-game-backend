@@ -13,24 +13,37 @@ const createQuiz: RequestHandler = catchAsync(async (req, res) => {
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'user create successfully',
+      message: 'Quiz create successfully',
       data: result,
     });
   });
 
 const getQuiz: RequestHandler = catchAsync(async (req, res) => {
   const query = req.query;
-  // console.log(query);
     const result = await quizService.getQuiz(query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'user create successfully',
+      message: 'Quiz Retrived successfully',
       data: result,
     });
   });
 
+const deleteQuiz: RequestHandler = catchAsync(async (req, res) => {
+  const id = req.params.id as string;
+    const result = await quizService.deleteQuiz(id);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Quiz deleted successfully',
+      data: result,
+    });
+  });
+
+
+
   export const quizController = {
     createQuiz,
-    getQuiz
+    getQuiz,
+    deleteQuiz
   }
