@@ -19,6 +19,14 @@ const http_status_1 = __importDefault(require("http-status"));
 const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
 const config_1 = __importDefault(require("../../config"));
 const createUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const isUserExist = yield prisma_1.default.user.findFirst({
+        where: {
+            email: data.email,
+        },
+    });
+    if (isUserExist) {
+        throw new ApiError_1.default(http_status_1.default.FOUND, 'User is already exist');
+    }
     const result = yield prisma_1.default.user.create({
         data,
     });
@@ -31,6 +39,10 @@ const loginUser = (data) => __awaiter(void 0, void 0, void 0, function* () {
             email,
         },
     });
+    ;
+    if (!isUserExist) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'User not found');
+    }
     if (isUserExist && (isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.password) !== password) {
         throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'Password is incorrect');
     }

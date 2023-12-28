@@ -8,6 +8,7 @@ import httpStatus from "http-status";
 
 const createQuiz: RequestHandler = catchAsync(async (req, res) => {
     const data = req.body;
+    console.log(data, 'datas...controler');
     const result = await quizService.createQuiz(data);
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -16,11 +17,10 @@ const createQuiz: RequestHandler = catchAsync(async (req, res) => {
       data: result,
     });
   });
-const getQuiz: RequestHandler = catchAsync(async (req, res) => {
 
+const getQuiz: RequestHandler = catchAsync(async (req, res) => {
   const query = req.query;
   // console.log(query);
-
     const result = await quizService.getQuiz(query);
     sendResponse(res, {
       statusCode: httpStatus.OK,
