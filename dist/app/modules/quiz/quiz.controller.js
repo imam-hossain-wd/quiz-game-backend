@@ -19,26 +19,37 @@ const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const http_status_1 = __importDefault(require("http-status"));
 const createQuiz = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = req.body;
+    console.log(data, 'datas...controler');
     const result = yield quiz_service_1.quizService.createQuiz(data);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user create successfully',
+        message: 'Quiz create successfully',
         data: result,
     });
 }));
 const getQuiz = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const query = req.query;
-    // console.log(query);
     const result = yield quiz_service_1.quizService.getQuiz(query);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,
-        message: 'user create successfully',
+        message: 'Quiz Retrived successfully',
+        data: result,
+    });
+}));
+const deleteQuiz = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const result = yield quiz_service_1.quizService.deleteQuiz(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Quiz deleted successfully',
         data: result,
     });
 }));
 exports.quizController = {
     createQuiz,
-    getQuiz
+    getQuiz,
+    deleteQuiz
 };

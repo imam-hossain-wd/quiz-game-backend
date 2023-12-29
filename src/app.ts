@@ -56,10 +56,10 @@ catch(error){
 });
 
 
-app.use('/', (req: Request, res: Response, next: NextFunction) => {
+app.use('/api/v1', (req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.OK).json({
     success: true,
-    message: 'welcome to our book catalog server',
+    message: 'welcome to our quiz game backend server',
   });
   next();
 });

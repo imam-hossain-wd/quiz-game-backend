@@ -31,16 +31,21 @@ const getQuiz = (query) => __awaiter(void 0, void 0, void 0, function* () {
         where: filterOptions,
         take: quizLimit,
         include: {
-            questions: {
-                include: {
-                    options: true,
-                },
-            },
-        },
+            quizOptions: true
+        }
+    });
+    return result;
+});
+const deleteQuiz = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.quiz.delete({
+        where: {
+            id
+        }
     });
     return result;
 });
 exports.quizService = {
     createQuiz,
-    getQuiz
+    getQuiz,
+    deleteQuiz
 };
